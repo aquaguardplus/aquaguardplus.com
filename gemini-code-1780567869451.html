@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Falcon BOS - Integrated Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --forest-deep: #142820;
+            --forest: #1E3A2F;
+            --copper: #B56A3A;
+            --cream-soft: #FAF6ED;
+            --cream-dark: #EDE4D0;
+            --stone: #8B7E6E;
+            --success-green: #196F3D;
+            --error-red: #A33B3B;
+            --r-md: 12px;
+            --r-lg: 18px;
+            --shadow-md: 0 10px 25px rgba(20,40,32,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Manrope', sans-serif; background: var(--cream-soft); color: var(--forest-deep); padding-bottom: 60px; }
+
+        /* MULTI-APP MONITOR HEADER WITH REAL LOGO MIXING */
+        header {
+            background: var(--forest-deep); color: var(--cream-soft); padding: 12px 20px;
+            display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--copper);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .header-brand { display: flex; align-items: center; gap: 14px; }
+        
+        /* LOGO BOX - MESHED PERFECTLY WITH CUSTOM MIX BLEND MODE FOR THEME HARMONY */
+        .header-logo-container { 
+            background: #000000; 
+            padding: 2px; 
+            border-radius: 8px; 
+            width: 55px; 
+            height: 55px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            border: 1px solid var(--copper);
+            overflow: hidden;
+        }
+        .header-logo-container img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain;
+        }
+        
+        .brand-text h1 { font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .brand-text span { font-size: 11px; color: var(--cream-dark); display: block; }
+        
+        .system-status-pill { background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; border: 1px solid var(--copper); }
+
+        .workspace { padding: 20px; max-width: 800px; margin: 0 auto; }
+
+        /* APP SCREENS */
+        .app-screen { display: none; background: white; border-radius: var(--r-lg); border: 2px solid var(--forest); box-shadow: var(--shadow-md); padding: 25px; margin-top: 10px; position: relative; overflow: hidden; }
+        .app-screen.active { display: block; animation: fadeIn 0.3s ease-out; }
+        
+        .app-tag { position: absolute; top: 0; right: 0; background: var(--forest); color: white; font-size: 10px; font-weight: 700; padding: 6px 16px; border-bottom-left-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* HERO AREA WITH LOGO DISPLAY ON MAIN WALL */
+        .hero-section { text-align: center; margin-bottom: 25px; padding: 10px 0; }
+        .hero-logo-box { width: 140px; height: 140px; margin: 0 auto 15px auto; background: #000000; border-radius: 14px; padding: 8px; border: 2px solid var(--copper); box-shadow: var(--shadow-md); }
+        .hero-logo-box img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .hero-main-title { font-size: 32px; font-weight: 800; color: var(--forest-deep); letter-spacing: -0.5px; margin-bottom: 2px; }
+        .hero-subtitle { font-size: 16px; font-weight: 700; color: var(--copper); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+        
+        .legal-notice-banner { 
+            background: #FFF5F5; border: 1px dashed var(--error-red); padding: 12px 16px; border-radius: var(--r-md); 
+            font-size: 12px; font-weight: 600; color: var(--error-red); line-height: 1.5; margin: 5px auto 20px auto; text-align: center;
+        }
+
+        /* POPUP MODAL */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(20,40,32,0.6); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
+        .modal-box { background: white; width: 90%; max-width: 500px; border-radius: var(--r-lg); border: 3px solid var(--copper); padding: 25px; box-shadow: var(--shadow-md); animation: fadeIn 0.2s ease-out; }
+        .modal-title { font-size: 18px; font-weight: 800; color: var(--forest-deep); margin-bottom: 10px; text-transform: uppercase; border-bottom: 1px solid var(--cream-dark); padding-bottom: 10px; }
+        
+        .zone-option-btn { width: 100%; text-align: left; padding: 15px; border: 2px solid var(--cream-dark); background: var(--cream-soft); border-radius: var(--r-md); margin-bottom: 12px; cursor: pointer; transition: all 0.2s; }
+        .zone-option-btn:hover { border-color: var(--copper); background: #FFF; }
+        .zone-option-btn strong { display: block; font-size: 15px; color: var(--forest-deep); margin-bottom: 3px; }
+        .zone-option-btn span { display: block; font-size: 12px; color: var(--stone); }
+
+        /* FORM FIELD ELEMENTS */
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--stone); margin-bottom: 6px; }
+        .form-group input { width: 100%; padding: 14px; border: 2px solid var(--cream-dark); border-radius: var(--r-md); font-size: 15px; font-weight: 600; outline: none; background: var(--cream-soft); }
+        .flex-inputs { display: flex; gap: 12px; }
+
+        /* BUTTON TERMINALS */
+        .btn-primary { width: 100%; padding: 15px; background: var(--forest); color: white; border: none; border-radius: var(--r-md); font-size: 14px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+        .btn-secondary { background: transparent; border: 2px solid var(--stone); color: var(--stone); padding: 10px 16px; border-radius: var(--r-md); font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 15px; }
+        
+        /* SHOWROOM TILES */
+        .showroom-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
+        .showroom-card { background: var(--cream-soft); border: 1px solid var(--cream-dark); border-radius: var(--r-md); padding: 15px; text-align: center; }
+        
+        /* HUB TERMINAL DISPLAY */
+        .support-matrix-card { background: #F2F7F5; border-left: 5px solid var(--success-green); padding: 15px; border-radius: var(--r-md); margin-bottom: 20px; }
+        
+        .portal-tabs { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid var(--cream-dark); padding-bottom: 8px; }
+        .tab-btn { background: none; border: none; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--stone); cursor: pointer; padding: 6px 12px; }
+        .tab-btn.active { color: var(--copper); border-bottom: 3px solid var(--copper); }
+        
+        .catalog-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .product-item-card { border: 1px solid var(--cream-dark); border-radius: var(--r-md); padding: 12px; background: white; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-item-card h5 { font-size: 14px; color: var(--forest-deep); margin-bottom: 4px; }
+        .product-item-card span { font-size: 11px; color: var(--copper); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        
+        .btn-sm-whatsapp { background: #E8F5E9; color: #1B5E20; border: 1px solid #C8E6C9; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: 700; text-align: center; text-decoration: none; text-transform: uppercase; }
+        .btn-sm-whatsapp:hover { background: #C8E6C9; }
+
+        .whatsapp-link-card { background: var(--forest-deep); border: 1px solid var(--copper); padding: 18px; border-radius: var(--r-md); display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-decoration: none; color: var(--cream-soft); font-weight: 700; font-size: 15px; box-shadow: var(--shadow-md); }
+        .whatsapp-link-card:hover { background: var(--forest); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <!-- MASTER TERMINAL HEADER INCLUDING RE-LINKED LOGO -->
+    <header>
+        <div class="header-brand">
+            <div class="header-logo-container">
+                <img src="Golden_Falcon_Logo_GreenDrop (4).jpg" alt="Golden Falcon™ Logo">
+            </div>
+            <div class="brand-text">
+                <h1>Golden Falcon™</h1>
+                <span>R for RO Dot Com</span>
+            </div>
+        </div>
+        <div class="system-status-pill" id="globalUserBadge">🏛️ Digital Showroom Open</div>
+    </header>
+
+    <div class="modal-overlay" id="zoneModal">
+        <div class="modal-box">
+            <div class="modal-title">🌐 Select Logistics Support Zone</div>
+            <p style="font-size: 12px; color: var(--error-red); font-weight: 700; margin-bottom: 15px; background: #FFF5F5; padding: 8px; border-radius: 6px;">
+                ⚠️ Honest Disclosure: Due to regional logistic expense variation, product rates vary by selection.
+            </p>
+            
+            <button class="zone-option-btn" onclick="selectZone('Ahmedabad', '•••••11200')">
+                <strong>Ahmedabad Hub Zone</strong>
+                <span>Full support (Sales, Service, Demo) within 50 KM. Regional support beyond.</span>
+            </button>
+
+            <button class="zone-option-btn" onclick="selectZone('Chennai', '•••••50552')">
+                <strong>Chennai Hub Zone</strong>
+                <span>Full support (Sales, Service, Demo) within 50 KM. Regional support beyond.</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="workspace">
+
+        <!-- ==========================================
+             APP 1: PUBLIC WEBSITE (OPEN DIGITAL SHOWROOM)
+             ========================================== -->
+        <div class="app-screen active" id="screen-website">
+            <div class="app-tag">App 1: Digital Showroom</div>
+            
+            <!-- CENTRAL HERO WALL SHOWCASING ORIGINAL LOGO FRAME -->
+            <div class="hero-section">
+                <div class="hero-logo-box">
+                    <img src="Golden_Falcon_Logo_GreenDrop (4).jpg" alt="Golden Falcon™ Branding">
+                </div>
+                <div class="hero-main-title">Golden Falcon™</div>
+                <div class="hero-subtitle">R for RO Dot Com</div>
+                
+                <div class="legal-notice-banner">
+                    ⚠️ <strong>Official Notice:</strong> We do not sell any items of our brand on any online platform, nor do we authorize anyone to do so. Unauthorized online sales will face immediate legal action at the seller's sole liability.
+                </div>
+            </div>
+            
+            <h3 style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; color: var(--stone); text-align: center;">🏛️ Windows Display (General Preview)</h3>
+            <div class="showroom-grid">
+                <div class="showroom-card"><h4>Domestic RO Systems</h4><p style="color: var(--copper); font-size:11px; font-weight:700;">5 Flagship Models</p></div>
+                <div class="showroom-card"><h4>Heavy Duty Spares</h4><p style="color: var(--copper); font-size:11px; font-weight:700;">4 Specialized Categories</p></div>
+            </div>
+
+            <div style="border-top: 2px dashed var(--cream-dark); padding-top: 20px;">
+                <div class="form-group">
+                    <label>Enter Mobile Number to open Secure Customer Portal</label>
+                    <div class="flex-inputs">
+                        <input type="tel" id="webMobile" placeholder="Enter 10 Digit Number" maxlength="10">
+                        <button class="btn-primary" style="width: auto; padding: 0 25px;" onclick="handleWebsiteSubmit()">Open Portal</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="webOtpPanel" style="display:none; background: #EDF4F1; padding: 15px; border-radius: var(--r-md); border: 1px solid #D4EFDF; margin-bottom: 20px;">
+                <label style="font-size: 11px; font-weight:700; color:var(--success-green); display:block; margin-bottom:5px;">🔒 ENTER OTP (Use Code: 1234)</label>
+                <div class="flex-inputs">
+                    <input type="text" id="webOtpCode" maxlength="4" placeholder="••••" style="text-align:center; letter-spacing:4px;">
+                    <button class="btn-primary" style="width: auto; padding: 0 25px; background: var(--success-green);" onclick="verifyWebsiteOtp()">Verify</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             APP 2: CUSTOMER PORTAL
+             ========================================== -->
+        <div class="app-screen" id="screen-customer">
+            <div class="app-tag" style="background: var(--success-green);">App 2: Customer Portal</div>
+            <button class="btn-secondary" onclick="logoutSystem()">← Exit Terminal</button>
+            
+            <div class="support-matrix-card">
+                <h4 style="color: var(--forest-deep); font-size: 15px; margin-bottom: 4px;">🎯 Mapped Hub: <span id="userActiveZone" style="color: var(--copper);">Not Set</span></h4>
+                <p style="font-size: 12px; color: var(--forest); line-height: 1.5; font-weight: 500;">
+                    📍 <strong>Within 50 KM:</strong> Full Support Active (Sales, Service & On-site Demo).<br>
+                    🚚 <strong>Beyond 50 KM:</strong> Regional Support Loop & All-India Logistics Applied. Rates adjusted transparently based on destination overheads.
+                </p>
+            </div>
+
+            <div class="portal-tabs">
+                <button class="tab-btn active" id="tabModelsBtn" onclick="switchTab('models')">5 Flagship RO Models</button>
+                <button class="tab-btn" id="tabSparesBtn" onclick="switchTab('spares')">4 Spare Categories</button>
+            </div>
+
+            <div class="catalog-grid" id="catalog-models">
+                <div class="product-item-card"><h5>Falcon Falcon-I (Domestic)</h5><span>Premium RO Series</span><a href="#" class="btn-sm-whatsapp" target="_blank">Enquire Model</a></div>
+                <div class="product-item-card"><h5>Falcon Falcon-II (Alkaline)</h5><span>Premium RO Series</span><a href="#" class="btn-sm-whatsapp" target="_blank">Enquire Model</a></div>
+                <div class="product-item-card"><h5>Falcon Falcon-III (Mineral)</h5><span>Premium RO Series</span><a href="#" class="btn-sm-whatsapp" target="_blank">Enquire Model</a></div>
+                <div class="product-item-card"><h5>Falcon Falcon-IV (Copper+)</h5><span>Premium RO Series</span><a href="#" class="btn-sm-whatsapp" target="_blank">Enquire Model</a></div>
+                <div class="product-item-card"><h5>Falcon Falcon-V (Ultra Flow)</h5><span>Premium RO Series</span><a href="#" class="btn-sm-whatsapp" target="_blank">Enquire Model</a></div>
+            </div>
+
+            <div class="catalog-grid" id="catalog-spares" style="display:none;">
+                <div class="product-item-card"><h5>RO Membranes</h5><span>Category 1</span><a href="#" class="btn-sm-whatsapp" target="_blank">Enquire Spares</a></div>
+                <div class="product-item-card"><h5>High-Flow Booster Pumps</h5><span>Category 2</span><a href="#" class="btn-sm-whatsapp" target="_blank">Enquire Spares</a></div>
+                <div class="product-item-card"><h5>Filter Cartridges & Media</h5><span>Category 3</span><a href="#" class="btn-sm-whatsapp" target="_blank">Enquire Spares</a></div>
+                <div class="product-item-card"><h5>Heavy Duty Housings</h5><span>Category 4</span><a href="#" class="btn-sm-whatsapp" target="_blank">Enquire Spares</a></div>
+            </div>
+
+            <a href="#" id="whatsappSecureAnchor" class="whatsapp-link-card" target="_blank">
+                <div>
+                    <span style="display:block; font-size:11px; text-transform:uppercase; color:var(--copper); letter-spacing:1px;">Official WhatsApp Support Terminal</span>
+                    <span style="font-size:16px;">💬 Route Order via WhatsApp (<span id="whatsappDisplayNum">•••••</span>)</span>
+                </div>
+                <span style="background:var(--copper); color:white; padding:8px 14px; border-radius:6px; font-size:12px;">LAUNCH CHAT →</span>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        let selectedZoneName = "";
+
+        function navigateTo(screenId) {
+            document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function switchTab(type) {
+            if(type === 'models') {
+                document.getElementById('catalog-models').style.display = "grid";
+                document.getElementById('catalog-spares').style.display = "none";
+                document.getElementById('tabModelsBtn').classList.add('active');
+                document.getElementById('tabSparesBtn').classList.remove('active');
+            } else {
+                document.getElementById('catalog-models').style.display = "none";
+                document.getElementById('catalog-spares').style.display = "grid";
+                document.getElementById('tabModelsBtn').classList.remove('active');
+                document.getElementById('tabSparesBtn').classList.add('active');
+            }
+        }
+
+        function selectZone(zoneName, maskedWhatsapp) {
+            selectedZoneName = zoneName;
+            document.getElementById('zoneModal').style.display = "none";
+            
+            document.getElementById('userActiveZone').innerText = zoneName;
+            document.getElementById('whatsappDisplayNum').innerText = maskedWhatsapp;
+            
+            let cleanNum = maskedWhatsapp.includes("11200") ? "9428211200" : "9445550552";
+            let waMsg = "https://wa.me/" + cleanNum + "?text=Hello%20Golden%20Falcon,%20I%20am%20a%20verified%20customer%20from%20" + zoneName + "%20Zone.";
+            
+            document.getElementById('whatsappSecureAnchor').href = waMsg;
+            document.querySelectorAll('.btn-sm-whatsapp').forEach(btn => btn.href = waMsg);
+            
+            document.getElementById('globalUserBadge').innerText = "👤 Hub: " + zoneName;
+            navigateTo('screen-customer');
+        }
+
+        function handleWebsiteSubmit() {
+            const mobile = document.getElementById('webMobile').value;
+            if(!mobile || mobile.length !== 10 || isNaN(mobile)) {
+                alert("❌ अमान्य नंबर! कृपया पूरा 10 अंकों का वैध मोबाइल नंबर दर्ज करें।");
+                return;
+            }
+            document.getElementById('webOtpPanel').style.display = "block";
+        }
+
+        function verifyWebsiteOtp() {
+            if(document.getElementById('webOtpCode').value !== "1234") {
+                alert("❌ गलत OTP!");
+                return;
+            }
+            document.getElementById('webOtpPanel').style.display = "none";
+            document.getElementById('zoneModal').style.display = "flex";
+        }
+
+        function logoutSystem() {
+            document.getElementById('webMobile').value = "";
+            document.getElementById('webOtpCode').value = "";
+            document.getElementById('globalUserBadge').innerText = "🏛️ Digital Showroom Open";
+            navigateTo('screen-website');
+        }
+    </script>
+</body>
+</html>
